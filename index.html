@@ -1,1 +1,600 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Ayanda ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #fce4ec, #f8e8ff);
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            padding: 20px;
+        }
+
+        /* ===== OVERLAY / LOCK SCREEN ===== */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #2d1b26, #4a1e36);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1.2s ease, transform 1.2s ease;
+            opacity: 1;
+            transform: scale(1);
+            padding: 30px;
+            text-align: center;
+        }
+
+        #overlay.hidden {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        #openHeart {
+            font-size: 7rem;
+            animation: pulse 1.8s ease-in-out infinite;
+            display: block;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: none;
+            border: none;
+            color: #ff4d6d;
+            user-select: none;
+        }
+
+        #openHeart:hover {
+            transform: scale(1.15);
+        }
+
+        #openHeart:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.12); }
+        }
+
+        #overlay h2 {
+            color: #f5dbe8;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        #overlay .sub-text {
+            color: #c99ab0;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            animation: fadeInOut 2.5s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        #overlay .click-hint {
+            margin-top: 30px;
+            color: #a06f8a;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            border: 1px solid rgba(255, 200, 220, 0.12);
+            padding: 10px 24px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(4px);
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        /* ===== MAIN CARD ===== */
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 40px 35px;
+            box-shadow: 0 25px 60px rgba(180, 100, 140, 0.25),
+                        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            text-align: center;
+            border: 1px solid rgba(255, 220, 240, 0.6);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+            min-height: 500px;
+            position: relative;
+        }
+
+        .card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .emoji-hearts {
+            font-size: 3rem;
+            letter-spacing: 8px;
+            animation: float 3s ease-in-out infinite;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #6a1b4d;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .subhead {
+            font-size: 1.1rem;
+            color: #9b4b77;
+            font-weight: 400;
+            margin-bottom: 28px;
+            border-bottom: 2px dashed #e8c0d0;
+            padding-bottom: 14px;
+        }
+
+        /* ===== LETTER ===== */
+        #letterContainer {
+            transition: all 0.6s ease;
+            overflow: hidden;
+            max-height: 2000px;
+            opacity: 1;
+            margin-bottom: 25px;
+        }
+
+        #letterContainer.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            pointer-events: none;
+        }
+
+        .letter {
+            background: rgba(255, 245, 248, 0.6);
+            border-radius: 28px;
+            padding: 30px 25px;
+            text-align: left;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #2d1b26;
+            box-shadow: 0 4px 16px rgba(190, 120, 150, 0.08);
+            border: 1px solid rgba(255, 210, 225, 0.5);
+        }
+
+        .letter p {
+            margin-bottom: 16px;
+        }
+
+        .letter p:last-child {
+            margin-bottom: 0;
+        }
+
+        .signoff {
+            text-align: right;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #6a1b4d;
+        }
+
+        .signoff strong {
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* ===== FORGIVE BUTTON ===== */
+        .forgive-btn {
+            background: #c44b7a;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 60px;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 24px rgba(196, 75, 122, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .forgive-btn:hover {
+            background: #b33b6a;
+            transform: scale(1.04);
+            box-shadow: 0 12px 32px rgba(196, 75, 122, 0.45);
+        }
+
+        .forgive-btn:active {
+            transform: scale(0.96);
+        }
+
+        .forgive-btn .sparkle {
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .forgive-btn:hover .sparkle {
+            animation: sparkle 0.8s ease infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        #forgiveBtn.hidden {
+            display: none;
+        }
+
+        /* ===== RESPONSE AREA ===== */
+        #response-area {
+            margin-top: 10px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* ===== MESSAGE CONTAINER ===== */
+        #messageContainer {
+            position: relative;
+            width: 100%;
+            min-height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        #response-message {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #4a1e36;
+            text-align: center;
+            padding: 0 10px;
+            position: absolute;
+            width: 100%;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+        }
+
+        #response-message.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        #response-message.slide-out {
+            opacity: 0;
+            transform: translateY(-40px) scale(0.9);
+        }
+
+        /* ===== CLICKABLE RESPONSE HEART ===== */
+        #responseHeart {
+            font-size: 4.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            background: none;
+            border: none;
+            color: #ff4d6d;
+            animation: pulse 2s ease-in-out infinite;
+            user-select: none;
+            padding: 10px 20px;
+            position: relative;
+        }
+
+        #responseHeart:hover {
+            transform: scale(1.15);
+        }
+
+        #responseHeart:active {
+            transform: scale(0.9);
+        }
+
+        #responseHeart.show {
+            display: block;
+        }
+
+        #responseHeart.final {
+            animation: none;
+            opacity: 0.6;
+            cursor: default;
+            transform: scale(0.95);
+        }
+
+        #responseHeart.final:hover {
+            transform: scale(0.95);
+        }
+
+        /* ===== EXTRA MESSAGES (hidden - we use the message container instead) ===== */
+        #extraMessages {
+            display: none;
+        }
+
+        .extra-love {
+            margin-top: 18px;
+            font-size: 2rem;
+            letter-spacing: 4px;
+            opacity: 0.6;
+            transition: opacity 0.4s ease;
+        }
+
+        .extra-love.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 480px) {
+            .card {
+                padding: 28px 18px;
+                min-height: 400px;
+            }
+            h1 {
+                font-size: 1.9rem;
+            }
+            .letter {
+                font-size: 0.98rem;
+                padding: 22px 18px;
+            }
+            .forgive-btn {
+                font-size: 1.1rem;
+                padding: 14px 34px;
+            }
+            #openHeart {
+                font-size: 5rem;
+            }
+            #overlay h2 {
+                font-size: 1.6rem;
+            }
+            #responseHeart {
+                font-size: 3.5rem;
+            }
+            #response-message {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== OVERLAY / LOCK SCREEN ===== -->
+    <div id="overlay">
+        <button id="openHeart" aria-label="Click to open">❤️</button>
+        <h2>A message for you</h2>
+        <div class="sub-text">— from Phetho —</div>
+        <div class="click-hint">✧ click the heart to open ✧</div>
+    </div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="card" id="mainCard">
+        <span class="emoji-hearts">💗 🌸 💖</span>
+
+        <h1>For Ayanda</h1>
+        <div class="subhead">with all my heart · from Phetho</div>
+
+        <!-- ===== LETTER ===== -->
+        <div id="letterContainer">
+            <div class="letter">
+                <p>My dearest Ayanda,</p>
+                <p>
+                    I saw your "divorce decree" — and honestly, it broke me. Not because it was harsh,
+                    but because it was <strong>true</strong>. You took the time to put into words what
+                    I've been too blind to see.
+                </p>
+                <p>
+                    I am so, so sorry. For the Jonasi comments, for not asking you to be my Youth Day
+                    partner, for making you feel like I admire others more than I cherish you.
+                    That was never my intention — but intentions don't matter when the impact hurts you.
+                </p>
+                <p>
+                    You deserve to be <em>chosen</em>, openly and loudly. You deserve good vibes,
+                    playlists made with you in mind, and a future where you never have to doubt
+                    where my heart is. I failed at that, and I'm deeply sorry.
+                </p>
+                <p>
+                    I don't want custody of anything except <strong>us</strong>. I want to earn back
+                    your smile, your trust, and your "I told you so" — because you were right.
+                </p>
+                <p>
+                    Please know that you are my priority. I'm not asking for a quick fix — I'm asking
+                    for a chance to show you, day by day, that I see you, I value you, and I love you.
+                </p>
+                <div class="signoff">
+                    — always yours, <strong>Phetho</strong> 💙
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FORGIVE BUTTON ===== -->
+        <button class="forgive-btn" id="forgiveBtn">
+            <span class="sparkle">✨</span> Forgive me? <span class="sparkle">✨</span>
+        </button>
+
+        <!-- ===== RESPONSE AREA ===== -->
+        <div id="response-area">
+            <div id="messageContainer">
+                <div id="response-message"></div>
+            </div>
+            <button id="responseHeart" aria-label="Click for more">❤️</button>
+            <div id="extraMessages"></div>
+        </div>
+
+        <div class="extra-love" id="extraLove">🌷 🕊️ 🌷</div>
+    </div>
+
+    <script>
+        // ============================================
+        // 1. OVERLAY: ONLY THE HEART CAN OPEN IT
+        // ============================================
+        const overlay = document.getElementById('overlay');
+        const openHeart = document.getElementById('openHeart');
+        const mainCard = document.getElementById('mainCard');
+
+        openHeart.addEventListener('click', function(e) {
+            e.stopPropagation();
+            overlay.classList.add('hidden');
+            mainCard.classList.add('reveal');
+        });
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                // Only the heart works
+            }
+        });
+
+        // ============================================
+        // 2. FORGIVE BUTTON → HIDES LETTER, SHOWS MESSAGE
+        // ============================================
+        const forgiveBtn = document.getElementById('forgiveBtn');
+        const letterContainer = document.getElementById('letterContainer');
+        const responseMsg = document.getElementById('response-message');
+        const responseHeart = document.getElementById('responseHeart');
+        const extraLove = document.getElementById('extraLove');
+
+        const initialMessages = [
+            "You just made my whole world brighter. Thank you. ❤️",
+            "I promise to be better — starting right now. 🙏",
+            "You're the best thing that ever happened to me. 🌟",
+            "I'll spend every day proving I'm worthy of you. 💫",
+            "Thank you, Ayanda. I love you. 🤍"
+        ];
+
+        const extraMessagesList = [
+            "🌹 I think about you more than you know.",
+            "💫 You make everything feel possible.",
+            "🌸 Your smile is my favorite thing.",
+            "🌙 I'd choose you again and again.",
+            "☀️ You are my sunshine, always.",
+            "💖 My heart belongs to you.",
+            "✨ You're the best part of my day.",
+            "🌺 I'm so grateful for you.",
+            "🌟 You deserve all the love in the world.",
+            "💕 Forever and always, Ayanda.",
+            "🌈 You color my world with joy.",
+            "🌻 You make my heart bloom.",
+            "💝 You are my greatest treasure.",
+            "✨ Every day with you is a blessing.",
+            "🕊️ You are my peace and my joy."
+        ];
+
+        let usedIndexes = [];
+        let extraIndex = 0;
+        let isForgiven = false;
+        let allMessagesShown = false;
+        let isTransitioning = false;
+
+        // ---- FORGIVE BUTTON ----
+        forgiveBtn.addEventListener('click', function() {
+            if (isForgiven) {
+                responseMsg.textContent = "You already forgave me — and I'm still grateful. 🥹💖";
+                responseMsg.className = 'show';
+                return;
+            }
+
+            // 1. Hide the letter
+            letterContainer.classList.add('hidden');
+
+            // 2. Hide the forgive button
+            forgiveBtn.classList.add('hidden');
+
+            // 3. Show a random initial message
+            let available = initialMessages.map((_, i) => i).filter(i => !usedIndexes.includes(i));
+            if (available.length === 0) {
+                usedIndexes = [];
+                available = initialMessages.map((_, i) => i);
+            }
+            const randomIndex = available[Math.floor(Math.random() * available.length)];
+            usedIndexes.push(randomIndex);
+            if (usedIndexes.length > initialMessages.length - 2) usedIndexes = [];
+
+            responseMsg.textContent = initialMessages[randomIndex];
+            responseMsg.className = 'show';
+
+            // 4. Show the response heart
+            responseHeart.classList.add('show');
+
+            // 5. Hide the extra love flowers
+            extraLove.classList.add('hidden');
+
+            isForgiven = true;
+        });
+
+        // ---- RESPONSE HEART (click for one message at a time with slide effect) ----
+        responseHeart.addEventListener('click', function() {
+            if (isTransitioning) return;
+            if (allMessagesShown) return;
+
+            // If we've shown all extra messages, show the final one
+            if (extraIndex >= extraMessagesList.length) {
+                allMessagesShown = true;
+                responseHeart.classList.add('final');
+                
+                // Show final "ran out of words" message
+                responseMsg.textContent = "💗 I've run out of words... but never out of love for you. 💗";
+                responseMsg.className = 'show';
+                return;
+            }
+
+            isTransitioning = true;
+
+            // Slide out current message
+            responseMsg.className = 'slide-out';
+
+            // After slide out, show new message
+            setTimeout(() => {
+                responseMsg.textContent = extraMessagesList[extraIndex];
+                extraIndex++;
+                responseMsg.className = 'show';
+                isTransitioning = false;
+            }, 400);
+
+            // If this was the last extra message, prepare for final
+            if (extraIndex >= extraMessagesList.length) {
+                // The next click will show the final message
+                // We'll handle it in the next click
+            }
+        });
+
+        // Handle the case where the final message needs to show
+        // The logic above handles it when extraIndex >= extraMessagesList.length
+    </script>
+
+</body>
+</html>
